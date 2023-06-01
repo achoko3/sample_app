@@ -12,7 +12,8 @@ class ListsController < ApplicationController
     # 4. トップ画面へリダイレクト
     redirect_to list_path(@list.id)
     else
-      render :index
+      @lists = List.all
+      render :new
     end
   end
 
