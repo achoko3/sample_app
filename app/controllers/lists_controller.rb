@@ -4,18 +4,19 @@ class ListsController < ApplicationController
     @list = List.new
  end
 
-  def create
-    # １.&2. データを受け取り新規登録するためのインスタンス作成
+ def create
+    # １. データを受け取り新規登録するためのインスタンス作成
     @list = List.new(list_params)
-    # 3. データをデータベースに保存するためのsaveメソッド実行
+    # 2. データをデータベースに保存するためのsaveメソッド実行
     if @list.save
-    # 4. トップ画面へリダイレクト
-    redirect_to list_path(@list.id)
+    # 3. フラッシュメッセージを定義し、詳細画面へリダイレクト
+     flash[:notice] = "投稿が成功しました"
+     redirect_to list_path(@list.id)
     else
       @lists = List.all
       render :new
     end
-  end
+ end
 
   def index
      @lists = List.all
@@ -41,8 +42,7 @@ class ListsController < ApplicationController
      redirect_to '/lists'
   end
 
-
-private
+ private
   # ストロングパラメータ
   def list_params
     params.require(:list).permit(:title, :body, :image)
